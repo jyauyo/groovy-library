@@ -1,6 +1,6 @@
 package sharedlib
 
-class DockerJenkinUtils extends BaseUtil{
+class DockerJenkinUtils extends BaseUtil {
 
   public DockerJenkinUtils(script, String type = ''){
     super(script, type)
@@ -8,7 +8,7 @@ class DockerJenkinUtils extends BaseUtil{
     //printMessage('**** DockerJenkinUtils ****')
   }
 
-  public build(Map config) {
+  public build(Map config = [:]) {
     
     sh 'echo Hi From DevOps Team'
     printMessage("${config.projectName}")
