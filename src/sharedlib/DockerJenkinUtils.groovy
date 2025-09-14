@@ -4,8 +4,6 @@ class DockerJenkinUtils extends BaseUtil {
 
   public DockerJenkinUtils(script, String type = ''){
     super(script, type)
-    this.script.steps.echo "**** ${script}"
-    //printMessage('**** DockerJenkinUtils ****')
   }
 
   public build(Map params) {
@@ -19,7 +17,7 @@ class DockerJenkinUtils extends BaseUtil {
     def jarName = script.steps.sh(script: "ls target/*.jar | head -1", returnStdout: true).trim()
     
      this.script.steps.writeFile file: 'Dockerfile', text:"""
-     FROM eclipse-temurin:21-jdk-alpine
+     FROM ${openJdkJava}
      ADD ${jarName} /app/service.jar
      WORKDIR /app
      ENTRYPOINT ["java", "-jar", "/app/service.jar"]
@@ -29,19 +27,16 @@ class DockerJenkinUtils extends BaseUtil {
     def docker_registry_complete = "${script.env.DOCKER_REGISTRY}"
     printMessage("***** Docker Registry Final: ${docker_registry_complete}");
 
-
-
     def dockerfile = 'Dockerfile'
    def customImage = script.docker.build("${docker_registry_complete}/${params.projectName}:${params.version}", "-f ${dockerfile} .")
 
    script.withCredentials([script.usernamePassword(credentialsId: "${script.env.DOCKER_CREDENTIALS_ID}", usernameVariable: 'dockerHubUser', passwordVariable: 'dockerHubPassword')]){
-
-       script.echo  "${script.env.dockerHubPassword} | login --username ${script.env.dockerHubUser} --password-stdin  ${script.env.DOCKER_URL}"                   
-       //sh "docker push ${env.DOCKER_REGISTRY}${env.DOCKER_REGISTRY_ENVIRONMENT}/app-microservice:${APP_VERSION}"
+     script.sh  """
+      set +x
+      ${script.env.dockerHubPassword} | login --username ${script.env.dockerHubUser} --password-stdin  ${script.env.DOCKER_URL}
+      """
+      printMessage("***** Publishing to Docker Registry: ${params.version}")
+      customImage.push()
    }
-   printMessage("***** Publishing to Docker Registry: ${params.version}")
-   customImage.push()
-    
-    //echo gitAuthorName()//other groovy
   }
 }
