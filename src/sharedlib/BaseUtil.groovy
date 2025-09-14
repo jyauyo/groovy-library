@@ -16,7 +16,7 @@ abstract class BaseUtil {
     def remoteConfigs =  this.script.scm.getUserRemoteConfigs()
     for (Object remoteConfig : remoteConfigs) {
       this.currentCredentialsId = remoteConfig.getCredentialsId()
-      printMessage("currentCredentialsId for ${remoteConfig}: ${currentCredentialsId}")
+      this.script.steps.echo "******** currentCredentialsId for ${remoteConfig}: ${currentCredentialsId}"
     }
   }
   
