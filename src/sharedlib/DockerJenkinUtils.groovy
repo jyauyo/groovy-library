@@ -16,7 +16,7 @@ class DockerJenkinUtils extends BaseUtil {
 
     printMessage("***** Creating Dockerfile")
     
-     writeFile file: 'Dockerfile', text:"""
+     this.script.steps.writeFile file: 'Dockerfile', text:"""
      FROM eclipse-temurin:21-jdk-alpine
      ADD ${params.jarName} /app/service.jar
      WORKDIR /app
