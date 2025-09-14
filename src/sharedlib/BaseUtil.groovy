@@ -20,9 +20,9 @@ abstract class BaseUtil {
         this.currentCredentialsId = remoteConfig.getCredentialsId()
         printMessage("currentCredentialsId for ${remoteConfig}: ${currentCredentialsId}")
       }
-    
-      protected void printMessage(String message) {
-        this.script.steps.echo "[DEVOPS] ${message}"
-      }
+    }
+  
+    protected void printMessage(String message) {
+      this.script.steps.echo "[DEVOPS] ${message}"
     }
   }
