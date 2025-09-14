@@ -5,7 +5,7 @@ class DockerJenkinUtils extends BaseUtil{
   public DockerJenkinUtils(script, String type = ''){
     super(script, type)
     this.script.steps.echo "**** ${script}"
-    printMessage('**** DockerJenkinUtils ****')
+    //printMessage('**** DockerJenkinUtils ****')
   }
 
   public build(Map config) {
