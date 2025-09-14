@@ -1,4 +1,4 @@
-package sharelib
+package sharedlib
 
 abstract class BaseUtil {
   protected script
