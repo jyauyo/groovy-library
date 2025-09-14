@@ -39,7 +39,7 @@ class DockerJenkinUtils extends BaseUtil {
        script.echo  "${script.env.dockerHubPassword} | login --username ${script.env.dockerHubUser} --password-stdin  ${script.env.DOCKER_URL}"                   
        //sh "docker push ${env.DOCKER_REGISTRY}${env.DOCKER_REGISTRY_ENVIRONMENT}/app-microservice:${APP_VERSION}"
    }
-   printMessage("***** Publishing to Docker Registry: ${APP_VERSION}")
+   printMessage("***** Publishing to Docker Registry: ${params.version}")
    customImage.push()
     
     //echo gitAuthorName()//other groovy
