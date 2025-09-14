@@ -1,4 +1,4 @@
-def call(Map config) {
+def build(Map config) {
   sh 'echo Hi From DevOps Team'
   echo "${config.projectName}"
   echo "${config.version}"
