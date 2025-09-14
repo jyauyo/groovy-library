@@ -8,11 +8,24 @@ class DockerJenkinUtils extends BaseUtil {
     //printMessage('**** DockerJenkinUtils ****')
   }
 
-  public build(Map config) {
+  public build(Map params) {
     
     //sh 'echo Hi From DevOps Team'
-    printMessage("${config.projectName}")
-    printMessage("${config.version}")
+    printMessage("${params.projectName}")
+    printMessage("${params.version}")
+
+    printMessage("***** Creating Dockerfile")
+    
+     writeFile file: 'Dockerfile', text:"""
+     FROM eclipse-temurin:21-jdk-alpine
+     ADD ${params.jarName} /app/service.jar
+     WORKDIR /app
+     ENTRYPOINT ["java", "-jar", "/app/service.jar"]
+     """
+
+    def docker_registry_environment_ = "${env.DOCKER_REGISTRY_ENVIRONMENT}"
+    def docker_registry_complete = "${env.DOCKER_REGISTRY}"
+    printMessage("***** Docker Registry Final: ${docker_registry_complete}");
     //echo gitAuthorName()//other groovy
   }
 }
