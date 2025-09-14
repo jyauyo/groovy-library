@@ -16,15 +16,15 @@ class DockerJenkinUtils extends BaseUtil {
 
     printMessage("***** Creating Dockerfile")
     
-     this.script.steps.writeFile file: 'Dockerfile', text:"""
+     this.script.steps.writeFile file: 'Dockerfilea', text:"""
      FROM eclipse-temurin:21-jdk-alpine
      ADD ${params.jarName} /app/service.jar
      WORKDIR /app
      ENTRYPOINT ["java", "-jar", "/app/service.jar"]
      """
 
-    def docker_registry_environment_ = "${env.DOCKER_REGISTRY_ENVIRONMENT}"
-    def docker_registry_complete = "${env.DOCKER_REGISTRY}"
+    def docker_registry_environment_ = "${script.env.DOCKER_REGISTRY_ENVIRONMENT}"
+    def docker_registry_complete = "${script.env.DOCKER_REGISTRY}"
     printMessage("***** Docker Registry Final: ${docker_registry_complete}");
     //echo gitAuthorName()//other groovy
   }
