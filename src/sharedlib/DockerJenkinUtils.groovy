@@ -8,9 +8,9 @@ class DockerJenkinUtils extends BaseUtil {
     //printMessage('**** DockerJenkinUtils ****')
   }
 
-  public build(Map config = [:]) {
+  public build(Map config) {
     
-    sh 'echo Hi From DevOps Team'
+    //sh 'echo Hi From DevOps Team'
     printMessage("${config.projectName}")
     printMessage("${config.version}")
     //echo gitAuthorName()//other groovy
