@@ -13,11 +13,11 @@ abstract class BaseUtil {
     this.script = script
     this.type =  type
   
-    def remoteConfigs =  this.script.scm.getUserRemoteConfigs()
-    for (Object remoteConfig : remoteConfigs) {
-      this.currentCredentialsId = remoteConfig.getCredentialsId()
-      this.script.steps.echo "******** currentCredentialsId for ${remoteConfig}: ${currentCredentialsId}"
-    }
+    //def remoteConfigs =  this.script.scm.getUserRemoteConfigs()
+    //for (Object remoteConfig : remoteConfigs) {
+      //this.currentCredentialsId = remoteConfig.getCredentialsId()
+      //this.script.steps.echo "******** currentCredentialsId for ${remoteConfig}: ${currentCredentialsId}"
+    //}
   }
   
   public void prepare() {
