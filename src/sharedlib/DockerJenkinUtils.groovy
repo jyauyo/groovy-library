@@ -34,7 +34,7 @@ class DockerJenkinUtils extends BaseUtil {
     def dockerfile = 'Dockerfile'
    def customImage = script.docker.build("${docker_registry_complete}/${params.projectName}:${params.version}", "-f ${dockerfile} .")
 
-   withCredentials([script.usernamePassword(credentialsId: "${script.env.DOCKER_CREDENTIALS_ID}", usernameVariable: 'dockerHubUser', passwordVariable: 'dockerHubPassword')]){
+   script.withCredentials([script.usernamePassword(credentialsId: "${script.env.DOCKER_CREDENTIALS_ID}", usernameVariable: 'dockerHubUser', passwordVariable: 'dockerHubPassword')]){
 
        script.echo  "${script.env.dockerHubPassword} | login --username ${script.env.dockerHubUser} --password-stdin  ${script.env.DOCKER_URL}"                   
        //sh "docker push ${env.DOCKER_REGISTRY}${env.DOCKER_REGISTRY_ENVIRONMENT}/app-microservice:${APP_VERSION}"
