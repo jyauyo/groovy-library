@@ -3,7 +3,7 @@ package sharedlib
 class DockerJenkinUtils extends BaseUtil{
 
   public DockerJenkinUtils(script, String type = ''){
-    echo '**** DockerJenkinUtils ****'
+    printMessage('**** DockerJenkinUtils ****')
   }
 
   public build(Map config) {
