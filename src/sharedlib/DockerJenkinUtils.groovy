@@ -32,7 +32,7 @@ class DockerJenkinUtils extends BaseUtil {
 
 
     def dockerfile = 'Dockerfile'
-   def customImage = docker.build("${docker_registry_complete}/${params.projectName}:${params.version}", "-f ${dockerfile} .")
+   def customImage = script.docker.build("${docker_registry_complete}/${params.projectName}:${params.version}", "-f ${dockerfile} .")
 
    withCredentials([usernamePassword(credentialsId: "${env.DOCKER_CREDENTIALS_ID}", usernameVariable: 'dockerHubUser', passwordVariable: 'dockerHubPassword')]){
 
