@@ -3,7 +3,7 @@ package sharedlib
 abstract class BaseUtil {
   protected script
   protected String type
-  protected String openJdkJava = "open-jdk-21"
+  protected String openJdkJava = "eclipse-temurin:21-jdk-alpine"
   protected def currentCredentialsId
   protected String sonarqubeurl
   
