@@ -6,6 +6,7 @@ abstract class BaseUtil {
   protected String openJdkJava = "eclipse-temurin:21-jdk-alpine"
   protected def currentCredentialsId
   protected String sonarqubeurl
+  protected def projectImage
   
   protected BaseUtil() {}
   
@@ -22,9 +23,20 @@ abstract class BaseUtil {
   
   public void prepare() {
     this.sonarqubeurl = "";
+
+    this.projectName = scm.getUserRemoteConfigs()[0].getUrl().tokenize('/').last().split("\\.")[0]
+    this.script.echo("***** Project Name: ${projectName}");
+    
+    def pom = readMavenPom file: 'pom.xml'
+    this.nroPase = pom.properties.nroPase
+    this.script.echo "***** NroPase: ${nroPase}"
+    
+    this.APP_VERSION = this.script.sh(script: "mvn help:evaluate -Dexpression=project.version -q -DforceStdout", returnStdout: true).trim()
+    this.script.echo "***** Version: ${APP_VERSION}"
+    
   }
   
   protected void printMessage(String message) {
-    this.script.steps.echo "[DEVOPS] ${message}"
+    this.script.echo "[DEVOPS] ${message}"
   }
 }
