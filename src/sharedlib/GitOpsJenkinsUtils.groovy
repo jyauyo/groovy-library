@@ -26,7 +26,13 @@ class GitOpsJenkinsUtils extends BaseUtil {
     printMessage("***** Sync With ArgoCd")
 
     script.withCredentials([script.usernamePassword(credentialsId: "${script.env.ARGOCD_CREDENTIALS_ID}", usernameVariable: 'ARGOCD_USERNAME', passwordVariable: 'ARGOCD_PASSWORD')]){
-
+      //EXISTE=$(argocd app list | grep ${projectName}  | echo 1 || echo 2)
+      script.sh "argocd login ${script.env.ARGOCD_HOST} --username ${script.env.ARGOCD_USERNAME} --password ${script.env.ARGOCD_PASSWORD} --insecure"
+      
+      def proc = ["bash", "-c", "argocd app list | grep ${projectName} && echo true || echo false"].execute()
+      proc.waitFor()
+      def argocdok = proc.in.text.trim()
+      printMessage("***** Does app exists? ${argocdok}")
       /*
       argocd app create capturador-plataformaunica \
       --repo http://gitlab.insi.sunat.peru/gestionsaldos/recaudacionms2-tributaria-gsc-capturador-plataformaunica-backend.git \
@@ -40,7 +46,7 @@ class GitOpsJenkinsUtils extends BaseUtil {
       --grpc-web;
       */
       
-      script.sh "argocd login ${script.env.ARGOCD_HOST} --username ${script.env.ARGOCD_USERNAME} --password ${script.env.ARGOCD_PASSWORD} --insecure"
+      
       script.sh "argocd app set ${projectName} --sync-policy none --grpc-web;"
       script.sh "argocd app set ${projectName} --revision ${BRANCH} --grpc-web;"
       script.sh "argocd app set ${projectName} --sync-policy automated --grpc-web;"
