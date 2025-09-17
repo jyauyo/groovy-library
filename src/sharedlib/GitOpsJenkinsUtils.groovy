@@ -3,7 +3,7 @@ package sharedlib
 
 class GitOpsJenkinsUtils extends BaseUtil {
 
-  def dockerJenkinsUtils = new DockerJenkinsUtils(this);
+  def dockerJenkinsUtils = new DockerJenkinsUtils(script, type);
   
   public GitOpsJenkinsUtils(script, String type = ''){
     super(script, type)
