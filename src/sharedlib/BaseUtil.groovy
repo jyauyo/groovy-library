@@ -28,7 +28,7 @@ abstract class BaseUtil {
     this.projectName = scm.getUserRemoteConfigs()[0].getUrl().tokenize('/').last().split("\\.")[0]
     this.script.echo("***** Project Name: ${projectName}");
     
-    def pom = readMavenPom file: 'pom.xml'
+    def pom = this.script.readMavenPom file: 'pom.xml'
     this.nroPase = pom.properties.nroPase
     this.script.echo "***** NroPase: ${nroPase}"
     
