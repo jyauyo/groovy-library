@@ -3,7 +3,7 @@ package sharedlib
 
 class GitOpsJenkinsUtils extends BaseUtil {
 
-  def dockerJenkinUtils = new DockerJenkinUtils(this);
+  def dockerJenkinsUtils = new DockerJenkinsUtils(this);
   
   public GitOpsJenkinsUtils(script, String type = ''){
     super(script, type)
@@ -11,7 +11,7 @@ class GitOpsJenkinsUtils extends BaseUtil {
 
   public buildAndPushImage(Map params){
     printMessage("buildAndPushImage")
-    dockerJenkinUtils.build(params)
+    dockerJenkinsUtils.build(params)
   }
 
   public syncWithArgoCd(Map params) {
