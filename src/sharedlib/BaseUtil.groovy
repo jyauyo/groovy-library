@@ -27,18 +27,18 @@ abstract class BaseUtil {
     this.sonarqubeurl = "";
 
     this.projectName = this.script.scm.getUserRemoteConfigs()[0].getUrl().tokenize('/').last().split("\\.")[0]
-    this.script.echo("***** Project Name: ${projectName}");
+    printMessage("***** Project Name: ${projectName}");
     
     def pom = this.script.readMavenPom file: 'pom.xml'
     this.nroPase = pom.properties.nroPase
-    this.script.echo "***** NroPase: ${nroPase}"
+    printMessage("***** NroPase: ${nroPase}")
     
     this.version = this.script.sh(script: "mvn help:evaluate -Dexpression=project.version -q -DforceStdout", returnStdout: true).trim()
-    this.script.echo "***** Version: ${version}"
+    printMessage("***** Version: ${version}")
     
   }
   
   protected void printMessage(String message) {
-    this.script.echo "[DEVOPS] ${message}"
+    this.script.steps.echo "[DEVOPS] ${message}"
   }
 }
