@@ -7,6 +7,7 @@ abstract class BaseUtil {
   protected def currentCredentialsId
   protected String sonarqubeurl
   protected def projectImage
+  protected def APP_VERSION
   
   protected BaseUtil() {}
   
