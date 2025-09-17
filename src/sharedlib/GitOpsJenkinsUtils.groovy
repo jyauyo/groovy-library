@@ -3,10 +3,11 @@ package sharedlib
 
 class GitOpsJenkinsUtils extends BaseUtil {
 
-  def dockerJenkinsUtils = new DockerJenkinsUtils(script, type);
+  def dockerJenkinsUtils
   
   public GitOpsJenkinsUtils(script, String type = ''){
     super(script, type)
+    dockerJenkinsUtils = new DockerJenkinsUtils(script, type)
   }
 
   public buildAndPushImage(){
