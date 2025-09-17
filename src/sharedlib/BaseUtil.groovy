@@ -7,6 +7,7 @@ abstract class BaseUtil {
   protected def currentCredentialsId
   protected String sonarqubeurl
   protected def projectImage
+  protected def nroPase
   protected def APP_VERSION
   
   protected BaseUtil() {}
@@ -25,7 +26,7 @@ abstract class BaseUtil {
   public void prepare() {
     this.sonarqubeurl = "";
 
-    this.projectName = scm.getUserRemoteConfigs()[0].getUrl().tokenize('/').last().split("\\.")[0]
+    this.projectName = this.script.scm.getUserRemoteConfigs()[0].getUrl().tokenize('/').last().split("\\.")[0]
     this.script.echo("***** Project Name: ${projectName}");
     
     def pom = this.script.readMavenPom file: 'pom.xml'
