@@ -16,22 +16,22 @@ class GitOpsJenkinsUtils extends BaseUtil {
     dockerJenkinsUtils.build(projectName: "${projectName}", version: "${version}", nroPase: "${nroPase}")
   }
 
-  public syncWithArgoCd(Map params) {
+  public syncWithArgoCd() {
     
     //sh 'echo Hi From DevOps Team'
-    printMessage("${params.projectName}")
-    printMessage("${params.version}")
-    printMessage("${params.nroPase}")
+    //printMessage("${params.projectName}")
+    //printMessage("${params.version}")
+    //printMessage("${params.nroPase}")
 
     printMessage("***** Sync With ArgoCd")
 
     script.withCredentials([script.usernamePassword(credentialsId: "${script.env.ARGOCD_CREDENTIALS_ID}", usernameVariable: 'ARGOCD_USERNAME', passwordVariable: 'ARGOCD_PASSWORD')]){
       script.sh "argocd login ${script.env.ARGOCD_HOST} --username ${script.env.ARGOCD_USERNAME} --password ${script.env.ARGOCD_PASSWORD} --insecure"
-      script.sh "argocd app set sistema-solar --sync-policy none --grpc-web;"
-      script.sh "argocd app set sistema-solar --revision ${params.branch} --grpc-web;"
-      script.sh "argocd app set sistema-solar --sync-policy automated --grpc-web;"
-      script.sh "argocd app sync sistema-solar"
-      script.sh "argocd app patch sistema-solar --patch '{\"metadata\":{\"labels\":{\"paseNro\":\"${params.nroPase}\"}}}' --type merge"
+      script.sh "argocd app set ${projectName} --sync-policy none --grpc-web;"
+      script.sh "argocd app set ${projectName} --revision ${BRANCH} --grpc-web;"
+      script.sh "argocd app set ${projectName} --sync-policy automated --grpc-web;"
+      script.sh "argocd app sync ${projectName}"
+      script.sh "argocd app patch ${projectName} --patch '{\"metadata\":{\"labels\":{\"paseNro\":\"${nroPase}\"}}}' --type merge"
     }
   }
 }
