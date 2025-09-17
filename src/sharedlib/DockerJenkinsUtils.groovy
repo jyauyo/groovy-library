@@ -8,14 +8,14 @@ class DockerJenkinsUtils extends BaseUtil {
 
   public build() {
     printMessage("***** Creating Dockerfile - DockerJenkinsUtils")
-    
+    printMessage("***** Publishing : ${script.version}")
     //sh 'echo Hi From DevOps Team'
     //printMessage("${params.projectName}")
     //printMessage("${params.version}")   
     
-    def jarName = script.steps.sh(script: "ls target/*.jar | head -1", returnStdout: true).trim()
+    def jarName = script.sh(script: "ls target/*.jar | head -1", returnStdout: true).trim()
     
-     this.script.steps.writeFile file: 'Dockerfile', text:"""
+     this.script.writeFile file: 'Dockerfile', text:"""
      FROM ${openJdkJava}
      ADD ${jarName} /app/service.jar
      WORKDIR /app
