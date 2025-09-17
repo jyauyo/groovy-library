@@ -35,29 +35,29 @@ class GitOpsJenkinsUtils extends BaseUtil {
       
       printMessage("***** Does app exists? ${argocdok}")
       if (argocdok) {
-        printMessage("***** update")
+        script.sh "argocd app set ${projectName} --sync-policy none --grpc-web;"
+        script.sh "argocd app set ${projectName} --revision ${script.env.BRANCH} --grpc-web;"
+        script.sh "argocd app set ${projectName} --sync-policy automated --grpc-web;"
+        script.sh "argocd app sync ${projectName}"
+        script.sh "argocd app patch ${projectName} --patch '{\"metadata\":{\"labels\":{\"paseNro\":\"${nroPase}\"}}}' --type merge"
       } else {
-        printMessage("***** crear")
+        script.sh """ 
+        #!/bin/bash
+        argocd app create ${projectName} \
+        --repo https://github.com/jyauyo/gitops-argocd.git \
+        --revision ${script.env.BRANCH} \
+        --path solar-system \
+        --dest-server https://192.168.18.34:8443 \
+        --dest-namespace demo \
+        --project demo \
+        --label paseNro=${nroPase} \
+        --grpc-web;
+        """
       }
-      /*
-      argocd app create capturador-plataformaunica \
-      --repo http://gitlab.insi.sunat.peru/gestionsaldos/recaudacionms2-tributaria-gsc-capturador-plataformaunica-backend.git \
-      --revision 2023-001 \
-      --path k8s/desarrollo/capturador-plataformaunica \
-      --dest-server https://172.26.58.21:8443 \
-      --dest-namespace gestionsaldos \
-      --project gestion-saldos \
-      --label paseNro=PASEXXX \
-      --label version=1.1.0-1 \
-      --grpc-web;
-      */
       
       
-      script.sh "argocd app set ${projectName} --sync-policy none --grpc-web;"
-      script.sh "argocd app set ${projectName} --revision ${script.env.BRANCH} --grpc-web;"
-      script.sh "argocd app set ${projectName} --sync-policy automated --grpc-web;"
-      script.sh "argocd app sync ${projectName}"
-      script.sh "argocd app patch ${projectName} --patch '{\"metadata\":{\"labels\":{\"paseNro\":\"${nroPase}\"}}}' --type merge"
+      
+
     }
   }
 }
