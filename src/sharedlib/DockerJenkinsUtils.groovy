@@ -7,12 +7,11 @@ class DockerJenkinsUtils extends BaseUtil {
   }
 
   public build(Map params) {
+    printMessage("***** Creating Dockerfile - DockerJenkinsUtils")
     
     //sh 'echo Hi From DevOps Team'
     printMessage("${params.projectName}")
-    printMessage("${params.version}")
-
-    printMessage("***** Creating Dockerfile")
+    printMessage("${params.version}")   
     
     def jarName = script.steps.sh(script: "ls target/*.jar | head -1", returnStdout: true).trim()
     
