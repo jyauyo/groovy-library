@@ -28,10 +28,11 @@ class GitOpsJenkinsUtils extends BaseUtil {
     script.withCredentials([script.usernamePassword(credentialsId: "${script.env.ARGOCD_CREDENTIALS_ID}", usernameVariable: 'ARGOCD_USERNAME', passwordVariable: 'ARGOCD_PASSWORD')]){
       //EXISTE=$(argocd app list | grep ${projectName}  | echo 1 || echo 2)
       script.sh "argocd login ${script.env.ARGOCD_HOST} --username ${script.env.ARGOCD_USERNAME} --password ${script.env.ARGOCD_PASSWORD} --insecure"
+
+      def argocdok = script.sh(
+        script: 'argocd app list | grep ${projectName} && echo true || echo false',
+        returnStdout: true).trim()
       
-      def proc = ["bash", "-c", "argocd app list | grep ${projectName} && echo true || echo false"].execute()
-      proc.waitFor()
-      def argocdok = proc.in.text.trim()
       printMessage("***** Does app exists? ${argocdok}")
       /*
       argocd app create capturador-plataformaunica \
