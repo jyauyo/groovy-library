@@ -49,7 +49,7 @@ class GitOpsJenkinsUtils extends BaseUtil {
       
       
       script.sh "argocd app set ${projectName} --sync-policy none --grpc-web;"
-      script.sh "argocd app set ${projectName} --revision ${BRANCH} --grpc-web;"
+      script.sh "argocd app set ${projectName} --revision ${params.branch} --grpc-web;"
       script.sh "argocd app set ${projectName} --sync-policy automated --grpc-web;"
       script.sh "argocd app sync ${projectName}"
       script.sh "argocd app patch ${projectName} --patch '{\"metadata\":{\"labels\":{\"paseNro\":\"${nroPase}\"}}}' --type merge"
