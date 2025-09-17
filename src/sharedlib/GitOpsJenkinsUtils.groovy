@@ -34,7 +34,7 @@ class GitOpsJenkinsUtils extends BaseUtil {
         returnStdout: true).trim()
       
       printMessage("***** Does app exists? ${argocdok}")
-      if (argocdok) {
+      if (argocdok == 'true') {
         script.sh "argocd app set ${projectName} --sync-policy none --grpc-web;"
         script.sh "argocd app set ${projectName} --revision ${script.env.BRANCH} --grpc-web;"
         script.sh "argocd app set ${projectName} --sync-policy automated --grpc-web;"
