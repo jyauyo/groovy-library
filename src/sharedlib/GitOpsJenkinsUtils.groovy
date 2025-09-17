@@ -47,7 +47,7 @@ class GitOpsJenkinsUtils extends BaseUtil {
         --repo https://github.com/jyauyo/gitops-argocd.git \
         --revision ${script.env.BRANCH} \
         --path solar-system \
-        --dest-server https://192.168.18.34:8443 \
+        --dest-server https://kubernetes.default.svc \
         --dest-namespace demo \
         --project demo \
         --label paseNro=${nroPase} \
