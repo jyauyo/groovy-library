@@ -31,10 +31,10 @@ class GitOpsJenkinsUtils extends BaseUtil {
 
       def argocdok = this.script.sh(
         script: "argocd app list | grep ${projectName} && echo true || echo false",
-        returnStdout: true).trim() == 'true'
+        returnStdout: true).trim() == 'false'
       
       printMessage("***** Does app exists? ${argocdok}")
-      if (argocdok) {
+      if (!argocdok) {
         script.sh "argocd app set ${projectName} --sync-policy none --grpc-web;"
         script.sh "argocd app set ${projectName} --revision ${script.env.BRANCH} --grpc-web;"
         script.sh "argocd app set ${projectName} --sync-policy automated --grpc-web;"
