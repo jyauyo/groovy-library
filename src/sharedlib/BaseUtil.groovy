@@ -6,7 +6,7 @@ abstract class BaseUtil {
   protected String openJdkJava = "eclipse-temurin:21-jdk-alpine"
   protected def currentCredentialsId
   protected String sonarqubeurl
-  protected def projectImage
+  protected def projectName
   protected def nroPase
   protected def APP_VERSION
   
