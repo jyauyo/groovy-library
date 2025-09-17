@@ -17,7 +17,7 @@ class GitOpsJenkinsUtils extends BaseUtil {
     dockerJenkinsUtils.build(projectName: "${projectName}", version: "${version}", nroPase: "${nroPase}")
   }
 
-  public syncWithArgoCd(Map params) {
+  public syncWithArgoCd(String argocdRepoYaml, String argocdNamespace, String argocdProject) {
     
     printMessage("Sync With ArgoCd")
 
@@ -40,12 +40,12 @@ class GitOpsJenkinsUtils extends BaseUtil {
         script.sh """ 
         #!/bin/bash
         argocd app create ${projectName} \
-        --repo https://github.com/${params.argocd_repoYaml} \
+        --repo https://github.com/${argocdRepoYaml} \
         --revision ${script.env.BRANCH} \
         --path solar-system \
         --dest-server ${script.env.ARGOCD_CLUSTER_K8S} \
-        --dest-namespace ${params.argocd_namespace} \
-        --project ${params.argocd_project} \
+        --dest-namespace ${argocdNamespace} \
+        --project ${argocdProject} \
         --label paseNro=${nroPase} \
         --grpc-web;
         """
