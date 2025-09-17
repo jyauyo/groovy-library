@@ -10,8 +10,8 @@ class DockerJenkinsUtils extends BaseUtil {
     printMessage("***** Creating Dockerfile - DockerJenkinsUtils")
     
     //sh 'echo Hi From DevOps Team'
-    printMessage("${params.projectName}")
-    printMessage("${params.version}")   
+    //printMessage("${params.projectName}")
+    //printMessage("${params.version}")   
     
     def jarName = script.steps.sh(script: "ls target/*.jar | head -1", returnStdout: true).trim()
     
@@ -27,11 +27,11 @@ class DockerJenkinsUtils extends BaseUtil {
     printMessage("***** Docker Registry Final: ${docker_registry_complete}");
 
     def dockerfile = 'Dockerfile'
-   def customImage = script.docker.build("${docker_registry_complete}/${params.projectName}:${params.version}", "-f ${dockerfile} .")
+   def customImage = script.docker.build("${docker_registry_complete}/${.projectName}:${version}", "-f ${dockerfile} .")
 
    script.withCredentials([script.usernamePassword(credentialsId: "${script.env.DOCKER_CREDENTIALS_ID}", usernameVariable: 'dockerHubUser', passwordVariable: 'dockerHubPassword')]){
      script.echo "${script.env.dockerHubPassword} | login --username ${script.env.dockerHubUser} --password-stdin  ${script.env.DOCKER_URL}"
-     printMessage("***** Publishing to Docker Registry: ${params.version}")
+     printMessage("***** Publishing to Docker Registry: ${version}")
      customImage.push()
    }
   }
