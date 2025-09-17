@@ -24,7 +24,7 @@ class GitOpsJenkinsUtils extends BaseUtil {
     printMessage("***** Sync With ArgoCd")
 
     script.withCredentials([script.usernamePassword(credentialsId: "${script.env.ARGOCD_CREDENTIALS_ID}", usernameVariable: 'ARGOCD_USERNAME', passwordVariable: 'ARGOCD_PASSWORD')]){
-      script.sh "argocd login ${env.ARGOCD_HOST} --username ${env.ARGOCD_USERNAME} --password ${env.ARGOCD_PASSWORD} --insecure"
+      script.sh "argocd login ${script.env.ARGOCD_HOST} --username ${script.env.ARGOCD_USERNAME} --password ${script.env.ARGOCD_PASSWORD} --insecure"
       script.sh "argocd app set sistema-solar --sync-policy none --grpc-web;"
       script.sh "argocd app set sistema-solar --revision ${env.BRANCH} --grpc-web;"
       script.sh "argocd app set sistema-solar --sync-policy automated --grpc-web;"
