@@ -8,7 +8,7 @@ abstract class BaseUtil {
   protected String sonarqubeurl
   protected def projectName
   protected def nroPase
-  protected def APP_VERSION
+  protected def version
   
   protected BaseUtil() {}
   
@@ -33,8 +33,8 @@ abstract class BaseUtil {
     this.nroPase = pom.properties.nroPase
     this.script.echo "***** NroPase: ${nroPase}"
     
-    this.APP_VERSION = this.script.sh(script: "mvn help:evaluate -Dexpression=project.version -q -DforceStdout", returnStdout: true).trim()
-    this.script.echo "***** Version: ${APP_VERSION}"
+    this.version = this.script.sh(script: "mvn help:evaluate -Dexpression=project.version -q -DforceStdout", returnStdout: true).trim()
+    this.script.echo "***** Version: ${version}"
     
   }
   
