@@ -7,7 +7,7 @@ class DockerJenkinsUtils extends BaseUtil {
   }
 
   public build() {
-    printMessage("***** Creating Dockerfile - DockerJenkinsUtils")
+    //printMessage("***** Creating Dockerfile - DockerJenkinsUtils")
     
     //sh 'echo Hi From DevOps Team'
     //printMessage("${params.projectName}")
