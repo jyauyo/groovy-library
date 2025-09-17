@@ -53,6 +53,7 @@ class GitOpsJenkinsUtils extends BaseUtil {
         --label paseNro=${nroPase} \
         --grpc-web;
         """
+        script.sh "argocd app sync ${projectName}"
       }
       
       
