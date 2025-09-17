@@ -30,10 +30,15 @@ class GitOpsJenkinsUtils extends BaseUtil {
       script.sh "argocd login ${script.env.ARGOCD_HOST} --username ${script.env.ARGOCD_USERNAME} --password ${script.env.ARGOCD_PASSWORD} --insecure"
 
       def argocdok = this.script.sh(
-        script: 'argocd app list | grep ${projectName} && echo true || echo false',
+        script: "argocd app list | grep ${projectName} && echo true || echo false",
         returnStdout: true).trim()
       
       printMessage("***** Does app exists? ${argocdok}")
+      if (argocdok.equals("true")) {
+        printMessage("***** update")
+      } else {
+        printMessage("***** crear")
+      }
       /*
       argocd app create capturador-plataformaunica \
       --repo http://gitlab.insi.sunat.peru/gestionsaldos/recaudacionms2-tributaria-gsc-capturador-plataformaunica-backend.git \
