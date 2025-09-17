@@ -11,54 +11,46 @@ class GitOpsJenkinsUtils extends BaseUtil {
   }
 
   public buildAndPushImage(){
-    printMessage("***** ooooooo Version: ${version}")
-    printMessage("***** Build And Push Image")
+    
+    printMessage("Build And Push Image")
+    
     dockerJenkinsUtils.build(projectName: "${projectName}", version: "${version}", nroPase: "${nroPase}")
   }
 
-  public syncWithArgoCd() {
+  public syncWithArgoCd(Map params) {
     
-    //sh 'echo Hi From DevOps Team'
-    //printMessage("${params.projectName}")
-    //printMessage("${params.version}")
-    //printMessage("${params.nroPase}")
-
-    printMessage("***** Sync With ArgoCd")
+    printMessage("Sync With ArgoCd")
 
     script.withCredentials([script.usernamePassword(credentialsId: "${script.env.ARGOCD_CREDENTIALS_ID}", usernameVariable: 'ARGOCD_USERNAME', passwordVariable: 'ARGOCD_PASSWORD')]){
-      //EXISTE=$(argocd app list | grep ${projectName}  | echo 1 || echo 2)
+
       script.sh "argocd login ${script.env.ARGOCD_HOST} --username ${script.env.ARGOCD_USERNAME} --password ${script.env.ARGOCD_PASSWORD} --insecure"
 
-      def argocdok = this.script.sh(
+      def existsArgoCdApp = this.script.sh(
         script: "argocd app list | grep -wq ${projectName} && echo true || echo false",
-        returnStdout: true).trim() == 'true'
+        returnStdout: true).trim() == 'true'      
       
-      printMessage("***** Does app exists? ${argocdok}")
-      if (argocdok) {
+      if (existsArgoCdApp) {
+        printMessage("Update argoCd Application: ${projectName}")
         script.sh "argocd app set ${projectName} --sync-policy none --grpc-web;"
-        script.sh "argocd app set ${projectName} --revision ${script.env.BRANCH} --grpc-web;"
-        script.sh "argocd app set ${projectName} --sync-policy automated --grpc-web;"
-        script.sh "argocd app sync ${projectName}"
+        script.sh "argocd app set ${projectName} --revision ${script.env.BRANCH} --grpc-web;"                
         script.sh "argocd app patch ${projectName} --patch '{\"metadata\":{\"labels\":{\"paseNro\":\"${nroPase}\"}}}' --type merge"
+        script.sh "argocd app set ${projectName} --sync-policy automated --grpc-web;"
       } else {
+        printMessage("Creating argoCD Application: ${projectName}")
         script.sh """ 
         #!/bin/bash
         argocd app create ${projectName} \
-        --repo https://github.com/jyauyo/gitops-argocd.git \
+        --repo https://github.com/${params.argocd_repoYaml} \
         --revision ${script.env.BRANCH} \
         --path solar-system \
-        --dest-server https://kubernetes.default.svc \
-        --dest-namespace demo \
-        --project demo \
+        --dest-server ${script.env.ARGOCD_CLUSTER_K8S} \
+        --dest-namespace ${params.argocd_namespace} \
+        --project ${params.argocd_project} \
         --label paseNro=${nroPase} \
         --grpc-web;
         """
-        script.sh "argocd app sync ${projectName}"
       }
-      
-      
-      
-
+      script.sh "argocd app sync ${projectName}"
     }
   }
 }
