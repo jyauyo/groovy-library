@@ -5,10 +5,10 @@ abstract class BaseUtil {
   protected String type
   protected String openJdkJava = "eclipse-temurin:21-jdk-alpine"
   protected def currentCredentialsId
-  protected String sonarqubeurl
-  protected def projectName
-  protected def nroPase
-  protected def version
+  String sonarqubeurl
+  def projectName
+  def nroPase
+  def version
   
   protected BaseUtil() {}
   
