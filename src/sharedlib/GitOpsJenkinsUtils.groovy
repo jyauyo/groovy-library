@@ -29,7 +29,7 @@ class GitOpsJenkinsUtils extends BaseUtil {
       //EXISTE=$(argocd app list | grep ${projectName}  | echo 1 || echo 2)
       script.sh "argocd login ${script.env.ARGOCD_HOST} --username ${script.env.ARGOCD_USERNAME} --password ${script.env.ARGOCD_PASSWORD} --insecure"
 
-      def argocdok = script.sh(
+      def argocdok = this.script.sh(
         script: 'argocd app list | grep ${projectName} && echo true || echo false',
         returnStdout: true).trim()
       
@@ -49,7 +49,7 @@ class GitOpsJenkinsUtils extends BaseUtil {
       
       
       script.sh "argocd app set ${projectName} --sync-policy none --grpc-web;"
-      script.sh "argocd app set ${projectName} --revision ${params.branch} --grpc-web;"
+      script.sh "argocd app set ${projectName} --revision ${script.env.BRANCH} --grpc-web;"
       script.sh "argocd app set ${projectName} --sync-policy automated --grpc-web;"
       script.sh "argocd app sync ${projectName}"
       script.sh "argocd app patch ${projectName} --patch '{\"metadata\":{\"labels\":{\"paseNro\":\"${nroPase}\"}}}' --type merge"
