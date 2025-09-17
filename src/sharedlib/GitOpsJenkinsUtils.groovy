@@ -34,7 +34,7 @@ class GitOpsJenkinsUtils extends BaseUtil {
         returnStdout: true).trim()
       
       printMessage("***** Does app exists? ${argocdok}")
-      if (argocdok.equals("true")) {
+      if (argocdok) {
         printMessage("***** update")
       } else {
         printMessage("***** crear")
