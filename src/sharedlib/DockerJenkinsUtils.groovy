@@ -7,7 +7,7 @@ class DockerJenkinsUtils extends BaseUtil {
   }
 
   public build() {
-    script.echo("***** Creating Dockerfile - DockerJenkinsUtils")
+    this.script.steps.echo("***** Creating Dockerfile - DockerJenkinsUtils")
     
     //sh 'echo Hi From DevOps Team'
     //printMessage("${params.projectName}")
