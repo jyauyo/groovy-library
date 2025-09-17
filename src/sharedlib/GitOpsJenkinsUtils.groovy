@@ -11,6 +11,7 @@ class GitOpsJenkinsUtils extends BaseUtil {
   }
 
   public buildAndPushImage(){
+    printMessage("***** ooooooo Version: ${version}")
     printMessage("***** Build And Push Image")
     dockerJenkinsUtils.build()
   }
