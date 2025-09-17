@@ -9,9 +9,9 @@ class GitOpsJenkinsUtils extends BaseUtil {
     super(script, type)
   }
 
-  public buildAndPushImage(Map params){
-    printMessage("buildAndPushImage")
-    dockerJenkinsUtils.build(params)
+  public buildAndPushImage(){
+    printMessage("***** Build And Push Image")
+    dockerJenkinsUtils.build()
   }
 
   public syncWithArgoCd(Map params) {
