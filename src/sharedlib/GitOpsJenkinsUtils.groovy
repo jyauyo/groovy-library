@@ -29,6 +29,8 @@ class GitOpsJenkinsUtils extends BaseUtil {
         script: "argocd app list | grep -wq ${projectName} && echo true || echo false",
         returnStdout: true).trim() == 'true'      
       
+      printMessage("existsArgoCdApp: ${existsArgoCdApp}")
+      
       if (existsArgoCdApp) {
         printMessage("Update argoCd Application: ${projectName}")
         script.sh "argocd app set ${projectName} --sync-policy none --grpc-web;"
