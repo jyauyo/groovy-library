@@ -32,7 +32,11 @@ class DockerJenkinsUtils extends BaseUtil {
    script.withCredentials([script.usernamePassword(credentialsId: "${script.env.DOCKER_CREDENTIALS_ID}", usernameVariable: 'dockerHubUser', passwordVariable: 'dockerHubPassword')]){
      this.script.echo "${script.env.dockerHubPassword} | login --username ${script.env.dockerHubUser} --password-stdin  ${script.env.DOCKER_URL}"
      printMessage("***** Publishing to Docker Registry: ${params.version}")
-     customImage.push()
+     
+     script.docker.withRegistry("${script.env.DOCKER_URL}", "${script.env.DOCKER_CREDENTIALS_ID}") {
+           customImage.push()
+      }
+     
    }
   }
 }
