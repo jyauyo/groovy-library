@@ -34,7 +34,7 @@ abstract class BaseUtil {
             agent: [
                 docker: [
                     image: "maven:3.9.11-eclipse-temurin-21",
-                    arg: "-v $HOME/.m2:/var/maven/.m2:z -e MAVEN_CONFIG=/var/maven/.m2 -e MAVEN_OPTS="-Duser.home=/var/maven"
+                    arg: '-v $HOME/.m2:/var/maven/.m2:z -e MAVEN_CONFIG=/var/maven/.m2 -e MAVEN_OPTS=-Duser.home=/var/maven'
                 ]
             ]
         ]
