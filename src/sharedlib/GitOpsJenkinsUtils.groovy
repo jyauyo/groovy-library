@@ -20,7 +20,9 @@ class GitOpsJenkinsUtils extends BaseUtil {
   public syncWithArgoCd(String argocdRepoYaml, String argocdNamespace, String argocdProject) {
     
     printMessage("Sync With ArgoCd")
-
+    
+    script.sh "pwd"
+    
     script.withCredentials([script.usernamePassword(credentialsId: "${script.env.ARGOCD_CREDENTIALS_ID}", usernameVariable: 'ARGOCD_USERNAME', passwordVariable: 'ARGOCD_PASSWORD')]){
 
       script.sh "argocd login ${script.env.ARGOCD_HOST} --username ${script.env.ARGOCD_USERNAME} --password ${script.env.ARGOCD_PASSWORD} --insecure"
