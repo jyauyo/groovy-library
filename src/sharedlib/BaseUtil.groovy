@@ -33,7 +33,8 @@ abstract class BaseUtil {
     this.nroPase = pom.properties.nroPase
     printMessage("***** NroPase: ${nroPase}")
     
-    this.version = this.script.sh(script: "mvn help:evaluate -Dexpression=project.version -q -DforceStdout", returnStdout: true).trim()
+    //this.version = this.script.sh(script: "mvn help:evaluate -Dexpression=project.version -q -DforceStdout", returnStdout: true).trim()
+    this.version = this.script.readMavenPom().getVersion()
     printMessage("***** Version: ${version}")
     
   }
