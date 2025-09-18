@@ -29,17 +29,6 @@ abstract class BaseUtil {
     this.projectName = this.script.scm.getUserRemoteConfigs()[0].getUrl().tokenize('/').last().split("\\.")[0]
     printMessage("***** Project Name: ${projectName}");
 
-    def ag = dockerAgent() {
-        return [
-            agent: [
-                docker: [
-                    image: "maven:3.9.11-eclipse-temurin-21",
-                    arg: '-v $HOME/.m2:/var/maven/.m2:z -e MAVEN_CONFIG=/var/maven/.m2 -e MAVEN_OPTS=-Duser.home=/var/maven'
-                ]
-            ]
-        ]
-    }
-    
     def pom = this.script.readMavenPom file: 'pom.xml'
     this.nroPase = pom.properties.nroPase
     printMessage("***** NroPase: ${nroPase}")
