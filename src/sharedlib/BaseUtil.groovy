@@ -29,7 +29,7 @@ abstract class BaseUtil {
     this.projectName = this.script.scm.getUserRemoteConfigs()[0].getUrl().tokenize('/').last().split("\\.")[0]
     printMessage("***** Project Name: ${projectName}");
 
-    def dockerAgent() {
+    def ag = dockerAgent() {
         return [
             agent: [
                 docker: [
