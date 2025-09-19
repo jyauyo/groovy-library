@@ -25,7 +25,7 @@ class DockerJenkinsUtils extends BaseUtil {
     def docker_registry_environment_ = "${script.env.DOCKER_REGISTRY_ENVIRONMENT}"
     def docker_registry_complete = "${script.env.DOCKER_REGISTRY}"
     printMessage("***** Docker Registry Final: ${docker_registry_complete}");
-
+    this.script.sh "pwd"
     def dockerfile = 'Dockerfile'
     def customImage = script.docker.build("${docker_registry_complete}/${params.projectName}:${params.version}", "-f ${dockerfile} .")
 
