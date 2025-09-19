@@ -2,10 +2,6 @@ package sharedlib
 
 class DockerJenkinsUtils extends BaseUtil {
 
-  //protected String DOCKER_REGISTRY = "jyauyor"
-  //protected String DOCKER_URL = "https://index.docker.io/v1/"
-  //protected String DOCKER_CREDENTIALS_ID = "dockerhub-credentials"
-
   public DockerJenkinsUtils(script, String type = ''){
     super(script, type)
   }
