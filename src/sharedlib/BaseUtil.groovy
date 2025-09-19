@@ -33,7 +33,7 @@ abstract class BaseUtil {
     this.nroPase = pom.properties.nroPase
     
     script.env.NRO_PASE = this.nroPase
-    this.script.writeFile file: '${nroPase}.txt', text:"""${nroPase}"""
+    this.script.writeFile file: "${nroPase}.txt", text:"""${nroPase}"""
     
     printMessage("***** NroPase: ${script.env.NRO_PASE}")
     
