@@ -2,7 +2,9 @@ package sharedlib
 
 class DockerJenkinsUtils extends BaseUtil {
 
-  public DockerJenkinsUtils(script, String type = ''){
+  public DockerJenkinsUtils(script, String type = ''){    
+    this.script.env.DOCKER_CONFIG = "/tmp/.docker"
+    this.script.env.ARGOCD_CONFIG_DIR = "/tmp/.config/argocd/config"
     super(script, type)
   }
 
