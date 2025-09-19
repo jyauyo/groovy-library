@@ -31,7 +31,11 @@ abstract class BaseUtil {
 
     def pom = this.script.readMavenPom file: 'pom.xml'
     this.nroPase = pom.properties.nroPase
-    printMessage("***** NroPase: ${nroPase}")
+    
+    script.env.NRO_PASE = ${nroPase}
+    this.script.writeFile file: '${nroPase}.txt', text:"""${nroPase}"""
+    
+    printMessage("***** NroPase: ${script.env.NRO_PASE}")
     
     //this.version = this.script.sh(script: "mvn help:evaluate -Dexpression=project.version -q -DforceStdout", returnStdout: true).trim()
     this.version = this.script.readMavenPom().getVersion()
