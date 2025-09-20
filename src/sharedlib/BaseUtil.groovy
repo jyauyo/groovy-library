@@ -40,7 +40,7 @@ abstract class BaseUtil {
     this.script.sh """ 
                     #!/bin/bash                    
                     pwd
-                    cd ..
+                    
                     rm -rf ${nroPase}
                     mkdir ${nroPase}
                     pwd
