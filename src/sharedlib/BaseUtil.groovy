@@ -41,8 +41,8 @@ abstract class BaseUtil {
                     #!/bin/bash                    
                     pwd
                     cd ..
-                    rm -rf ${env.NRO_PASE}
-                    mkdir ${env.NRO_PASE}
+                    rm -rf ${nroPase}
+                    mkdir ${nroPase}
                     pwd
                     """
     
