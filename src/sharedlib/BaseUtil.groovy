@@ -35,6 +35,16 @@ abstract class BaseUtil {
     
     script.env.NRO_PASE = this.nroPase
     this.script.writeFile file: "${nroPase}.txt", text:"""${nroPase}"""
+
+
+    this.script.sh """ 
+                    #!/bin/bash                    
+                    pwd
+                    cd ..
+                    rm -rf ${env.NRO_PASE}
+                    mkdir ${env.NRO_PASE}
+                    pwd
+                    """
     
     printMessage("***** NroPase: ${script.env.NRO_PASE}")
     
