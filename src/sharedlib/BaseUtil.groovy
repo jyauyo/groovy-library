@@ -24,7 +24,7 @@ abstract class BaseUtil {
   }
   
   public void prepare() {
-    this.script.env.GIT_CONFIG = "/tmp/.git"
+    this.script.env.GIT_CONFIG = "/tmp/.git/config"
     this.sonarqubeurl = "";
 
     this.projectName = this.script.scm.getUserRemoteConfigs()[0].getUrl().tokenize('/').last().split("\\.")[0]
