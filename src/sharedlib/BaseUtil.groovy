@@ -14,7 +14,7 @@ abstract class BaseUtil {
   
   protected BaseUtil(script, String type = '') {
     this.script = script
-    this.type =  type
+    this.type =  type    
   
     //def remoteConfigs =  this.script.scm.getUserRemoteConfigs()
     //for (Object remoteConfig : remoteConfigs) {
@@ -24,6 +24,7 @@ abstract class BaseUtil {
   }
   
   public void prepare() {
+    this.script.env.GIT_CONFIG = "/tmp/.git"
     this.sonarqubeurl = "";
 
     this.projectName = this.script.scm.getUserRemoteConfigs()[0].getUrl().tokenize('/').last().split("\\.")[0]
