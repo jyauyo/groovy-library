@@ -27,7 +27,8 @@ abstract class BaseUtil {
     this.sonarqubeurl = "";
 
     this.projectName = this.script.scm.getUserRemoteConfigs()[0].getUrl().tokenize('/').last().split("\\.")[0]
-    printMessage("***** Project Name: ${projectName}");
+    script.env.PROJECT_NAME = this.projectName
+    printMessage("***** Project Name: ${script.env.PROJECT_NAME}");
 
     def pom = this.script.readMavenPom file: 'pom.xml'
     this.nroPase = pom.properties.nroPase
