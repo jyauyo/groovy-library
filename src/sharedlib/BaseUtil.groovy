@@ -51,6 +51,7 @@ abstract class BaseUtil {
     
     //this.version = this.script.sh(script: "mvn help:evaluate -Dexpression=project.version -q -DforceStdout", returnStdout: true).trim()
     this.version = this.script.readMavenPom().getVersion()
+    script.env.VERSION = this.version
     printMessage("***** Version: ${version}")
     
   }
