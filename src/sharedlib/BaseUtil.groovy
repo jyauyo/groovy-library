@@ -35,17 +35,19 @@ abstract class BaseUtil {
     this.nroPase = pom.properties.nroPase
     
     script.env.NRO_PASE = this.nroPase
-    this.script.writeFile file: "${nroPase}.txt", text:"""${nroPase}"""
 
+    //Se crea un archivo con el nombre del pase
+    //this.script.writeFile file: "${nroPase}.txt", text:"""${nroPase}"""
 
+    //se crea la carpeta del pase
     this.script.sh """ 
-                    #!/bin/bash                    
-                    pwd
-                    
-                    rm -rf ${nroPase}
-                    mkdir ${nroPase}
-                    pwd
-                    """
+    #!/bin/bash                    
+    pwd
+    
+    rm -rf ${nroPase}
+    mkdir ${nroPase}
+    pwd
+    """
     
     printMessage("***** NroPase: ${script.env.NRO_PASE}")
     
