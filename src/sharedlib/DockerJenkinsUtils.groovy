@@ -19,9 +19,13 @@ class DockerJenkinsUtils extends BaseUtil {
 
     this.script.writeFile file: 'Dockerfile', text:"""
     FROM ${openJdkJava}
-    ADD ${jarName} /app/service.jar
+    ADD ${jarName} /app/backend.jar
+
+    RUN mkdir -p /opt/data
+    RUN mkdir -p /opt/contratos
+    
     WORKDIR /app
-    ENTRYPOINT ["java", "-jar", "/app/service.jar"]
+    ENTRYPOINT ["java", "-jar", "/app/backend.jar"]
     """
 
     def docker_registry_environment_ = "${script.env.DOCKER_REGISTRY_ENVIRONMENT}"
